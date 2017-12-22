@@ -12,7 +12,7 @@ namespace dj {
 
 	// Random double in [0:1] with 32 bit resolution
 	template<class URNG> static inline double ranf(URNG& rng) {
-		auto constexpr diff = URNG::max() - URNG::min();
+		auto const diff = URNG::max() - URNG::min();
 		constexpr uint32_t max32 = 0xffffffffU;
 		if constexpr (diff == max32) {
 			auto raw = static_cast<uint32_t>(rng());
@@ -25,7 +25,7 @@ namespace dj {
 
 	// Gorge Marsaglia's "Monty Python" standard normal distribution
 	template<class URNG>
-	static inline double standard_normal(URNG& rng) {
+	static double standard_normal(URNG& rng) {
 		const double a = 1.177410;
 		const double b = 2.506628;
 		const double s = .8857913;
@@ -98,8 +98,8 @@ namespace dj {
 		inline uint32_t operator() () {
 			return znew() | wnew();
 		}
-		constexpr uint32_t min() { return 0; }
-		constexpr uint32_t max() { return 0xffffffff; }
+		static constexpr uint32_t min() { return 0; }
+		static constexpr uint32_t max() { return 0xffffffff; }
 		using result_type = uint32_t;
 
 	private:
